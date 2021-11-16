@@ -1,25 +1,17 @@
 <?php
-  if (!empty($_POST)){
-      foreach($_POST as $key => $value){
-          if (empty($value)){
-              header('location: ./database_insert.php?error=1&info=Wypełnij wszystkie dane!&addUser=');
-              exit();
-          }
-      }
+  if (!empty($_POST['name']) && !empty($_POST['surname']) && !empty($_POST['birthday']) && !empty($_POST['cityid'])) {
+    echo "Dane wypełnione";
+    require_once './connect.php';
       
-      require_once './connect.php';
-        $sql = "INSERT INTO `users` (`id`, `name`, `surname`, `birthday`, `cityId`) VALUES (NULL, '$_POST[name]', '$_POST[surname]', '$_POST[birthday]', '$_POST[cityId]');";
-      $connect->query($sql);
+//      $name = $_GET['name'];
       
-      if($connect->affected_rows == 1){
-          header('location: ./database_insert.php?error=1&info=dodano user&addUser=');
-      }
-      else{
-          header('location: ./database_insert.php?error=1&info=nie dodano user&addUser=');
-      }
-      $connect->close();
+//    $sql="DELETE FROM `users` WHERE `users`.`id` = $_POST[id]";
+    $sql2= "INSERT INTO `users`(`id`, `name`, `surname`, `birthday`, `city`) VALUES (NULL,$_POST[name],$_POST[surname],$_POST[birthday],$_POST[city])";
+      
+      $sql3= "INSERT INTO `users`(`id`, `name`, `surname`, `birthday`, `city`) VALUES (NULL,'$_POST[name]','$_POST[surname]',$_POST[birthday],$_POST[city])";
+    $connect->query($sql3);
   }
   else {
-    header('location: ./database_insert.php?error=1&info=Wypełnij wszystkie dane!&addUser=');
+    header('location: ../4_bazy_tabela_insert.php?error=1&info=Wypełnij wszystkie dane!&addUser=');
   }
 ?>
